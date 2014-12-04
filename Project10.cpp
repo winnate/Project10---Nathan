@@ -1,26 +1,39 @@
 #include <iostream>
 using namespace std;
 
+
 /* 
 	Nathan Winscher
-	10-14-14
-	Finding Day by Date
+	12-3-14
+	Finding Day by Date - Project 10
 */
+
 
 class Date {
 public:
-	int process(int a, int b, int c);
+	// Accessors
+	int getDay(){return day;}
+	int getMonth(){return month;}
+	int getYear(){return year;}
+	// Mutators
+	bool setDay(int dayIn);
+	bool setMonth(int monthIn);
+	bool setYear(int yearIn);
+	int process();
+	// Utility Functions
 private:
+	// Data Members
 	int day;
 	int month;
 	int year;
-	int getMonthValue(int b, int c);
-	bool isLeapYear(int c);
-	int getYearValue(int c);
-	int getCenturyValue(int c);
+	int getMonthValue();
+	bool isLeapYear();
+	int getYearValue();
+	int getCenturyValue();
 };
 
-void getInput(int& day, int& month, int& year);
+
+void getInput(int& month, int& day, int& year);
 //Precondition: User is ready to enter correct values
 //Postcondition: The month, day, and year have been 
 //Entered by the user and are stored in the variables
@@ -44,6 +57,7 @@ int main() {
 	int month, day, year, sum;
 	char answer;
 	Date date;
+	bool dayOk, monthOk, yearOk;
 	
 	//User Input
 	cout << "We Are About To Find The Day Of The Week Based On The Date" <<
@@ -51,20 +65,30 @@ int main() {
 	cin >> answer;
 	
 	while ((answer == 'y') || (answer == 'Y')){
-		getInput(day, month, year);
-		
-		//Process Data
-		sum = date.process(day, month, year);
-		
-		//Display Output
-		output(sum);
-		answer = prompt();
+		getInput(month, day, year);
+		dayOk = date.setDay(day);
+		monthOk = date.setMonth(month);
+		yearOk = date.setYear(year);
+	
+		if ((monthOk) && (dayOk) && (yearOk)){
+			//Process Data
+			sum = date.process(day, month, year);
+	
+			//Display Output
+			output(sum);
+			answer = prompt();
+		}
+		else {
+			cout << "You have entered invalid Data.  Would you like to try again?";
+			cin >> answer;
+		}
 	}
-	return 0;
 }
 
 
-void getInput(int& day, int& month, int& year){
+
+
+void getInput(int& month, int& day, int& year){
 	cout << "\nPlease Enter The Date In The Following Format (MM/DD/YYYY) " << endl;
 	cout << "\nMonth: ";
 	cin >> month;
@@ -74,11 +98,13 @@ void getInput(int& day, int& month, int& year){
 	cin >> year;
 }
 
-int Date::getMonthValue(int b, int c){
-	switch(b)
+
+
+int Date::getMonthValue(){
+	switch(month)
 	{
 		case 1:
-		if (isLeapYear(c) == true)
+		if (isLeapYear() == true)
 		{
 			return 6;
 			break;
@@ -89,7 +115,7 @@ int Date::getMonthValue(int b, int c){
 			break;		
 		} 
 		case 2:
-		if (isLeapYear(c) == true)
+		if (isLeapYear() == true)
 		{
 			return 2;
 			break;
@@ -131,24 +157,24 @@ int Date::getMonthValue(int b, int c){
 			break;
 	}
 }
-		
-bool Date::isLeapYear(int c){
-	if ((c % 400 == 0) || ((c % 4 == 0) && (c % 100 != 0)))
+	
+bool Date::isLeapYear(){
+	if ((year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0)))
 		return true;
 	else
 		return false;
 }
 
-int Date::getYearValue(int c){
+int Date::getYearValue(){
 	int last2, result;
-	last2 = c % 100;
+	last2 = year % 100;
 	result = last2 / 4;
 	return last2 + result;
 }
 
-int Date::getCenturyValue(int c){
+int Date::getCenturyValue(){
 	int first2, rem;
-	first2 = c / 100;
+	first2 = year / 100;
 	rem = first2 % 4;
 	return (3 - rem) * 2;
 }
@@ -179,14 +205,13 @@ void output(int sum){
 	}
 }
 
-int Date::process(int a, int b, int c){
-	int century;
-	day = a;
-	month = getMonthValue(b, c);
-	year = getYearValue(c);
-	century = getCenturyValue(c);
-	return (month + century + year + day) % 7;	
+
+void Date::process(){
+	day = dayIn;
+	month = getMonthValue();
+	year = getYearValue();
 }
+
 
 char prompt(){
 	char answer;
@@ -195,3 +220,43 @@ char prompt(){
 	cin >> answer;
 	return answer;
 }
+
+bool Date::setDay (int dayIn){
+	if ((dayIn <= 0) || (dayIn >=31))
+	{
+		cout << "ERROR!  INCORRECT INPUT!";
+		return false;
+	}
+	else
+	{
+		day = dayIn;
+		return true;
+	} 
+}
+
+bool Date::setMonth (int monthIn){
+	if ((monthIn <= 0) || (monthIn > 12))
+	{
+		cout << "ERROR!  INCORRECT INPUT!";
+		return false;
+	}
+	else
+	{
+		month = monthIn;
+		return true;
+	} 
+}
+
+bool Date::setYear (int yearIn){
+	if (yearIn <= 0)
+	{
+		cout << "ERROR!  INCORRECT INPUT!";
+		return false;
+	}
+	else
+	{
+		year = yearIn;
+		return true;
+	} 
+}
+
