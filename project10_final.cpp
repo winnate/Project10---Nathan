@@ -9,17 +9,34 @@ using namespace std;
 */
 
 class Date {
-public:
+public: 
+	// No Need For Other Mutators Or Accessors
 	int process(int a, int b, int c);
+	// Precondition: The user knows the correct date
+	// That they would like to find the corresponding day to 
+	// Postcondition: The day is calculated and returned
 private:
 	int day;
 	int month;
 	int year;
 	int getMonthValue(int month, int year);
+	// Precondition: User has correctly entered data
+	// Postcondition: The correct value is returned
+	// Based off the date entered and isLeapYear()
 	bool isLeapYear(int year);
+	// Precondition: User has correctly entered data
+	// Postcondition: Returned TRUE if it is a leap year
+	// Returned FALSE if not
 	int getYearValue(int year);
+	// Precondition: User has correctly entered the year 
+	// Postcondition: Value is returned 
 	int getCenturyValue(int year);
+	// Precondition:  User correctly entered the year
+	// Postcondition: Century Value is returned
 	void errorCheck(int a, int b, int c);
+	// Precondition:  User has entered data
+	// Postcondition: If the data is valid the program
+	// Continues, if not, it exits. 
 };
 
 void getInput(int& day, int& month, int& year);
@@ -32,7 +49,7 @@ void output(int sum);
 //By the program from the user input
 //Postcondition: Display to the screen the day of the
 //week that corresponds to the date inputted by the user
-char prompt();
+void prompt(char &answer);
 //Precondition: The user knows whether or not they'd like
 //to continue
 //Postcondition: If the user would like to continue the 
@@ -43,24 +60,24 @@ char prompt();
 int main() {
 	
 	//Declare Variables
-	int month, day, year, sum;
-	char answer;
-	Date date;
+	int month, day, year, sum;		// Declare integer variables
+	char answer;					// Declare character variables
+	Date date;						// Instantiate date class
 	
 	//User Input
 	cout << "\nWe Are About To Find The Day Of The Week Based On The Date" <<
 		"\nPress (Y) To Continue Or Any Other Key To Exit: ";
-	cin >> answer;
+	cin >> answer;					// User Input
 	
-	while (answer == toupper('Y')){
-		getInput(day, month, year);
+	while (toupper(answer) == 'Y'){	// Loop while answer = y
+		getInput(day, month, year); // User enters date
 		
 		//Process Data
-		sum = date.process(day, month, year);
+		sum = date.process(day, month, year);	// Process data and return sum based on month, year and day calculations 
 		
 		//Display Output
-		output(sum);
-		answer = prompt();
+		output(sum);				// Output day of the week based on processed data
+		prompt(answer);			// Prompt user to run again 
 	}
 	return 0;
 }
@@ -199,10 +216,8 @@ void Date::errorCheck(int a, int b, int c){
 	}
 };
 
-char prompt(){
-	char answer;
+void prompt(char &answer){
 	cout << "\nWould You Like To Run The Program Again?" <<
 		"\n(Y) To Continue, Press Any Other Key To Exit: ";
 	cin >> answer;
-	return answer;
 }
