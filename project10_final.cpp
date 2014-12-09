@@ -19,7 +19,7 @@ private:
 	bool isLeapYear(int year);
 	int getYearValue(int year);
 	int getCenturyValue(int year);
-	bool errorCheck(int a, int b, int c);
+	void errorCheck(int a, int b, int c);
 };
 
 void getInput(int& day, int& month, int& year);
@@ -182,10 +182,7 @@ void output(int sum){
 }
 
 int Date::process(int a, int b, int c){
-	if (errorCheck(a, b, c)){
-		cout << "\nInvalid data!\n" << "\nTerminating Program! Please try again.\n";
-		exit(1);
-	};
+	errorCheck(a, b, c);
 	int century;
 	day = a;
 	month = getMonthValue(b, c);
@@ -194,9 +191,12 @@ int Date::process(int a, int b, int c){
 	return (month + century + year + day) % 7;	
 }
 
-bool Date::errorCheck(int a, int b, int c){
+void Date::errorCheck(int a, int b, int c){
 	if ((a < 1)||(a > 31)||(b < 1)||(b > 12)||(c < 1582))
-		return true;
+	{
+		cout << "\nInvalid data!\n" << "\nTerminating Program! Please try again.\n";
+		exit(1);
+	}
 	else
 		return false;
 };
