@@ -52,7 +52,7 @@ int main() {
 		"\nPress (Y) To Continue Or Any Other Key To Exit: ";
 	cin >> answer;
 	
-	while ((answer == 'y') || (answer == 'Y')){
+	while (answer == toupper('Y')){
 		getInput(day, month, year);
 		
 		//Process Data
