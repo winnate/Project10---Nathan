@@ -197,8 +197,6 @@ void Date::errorCheck(int a, int b, int c){
 		cout << "\nInvalid data!\n" << "\nTerminating Program! Please try again.\n";
 		exit(1);
 	}
-	else
-		return false;
 };
 
 char prompt(){
