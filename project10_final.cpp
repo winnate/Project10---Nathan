@@ -77,7 +77,7 @@ int main() {
 		
 		//Display Output
 		output(sum);				// Output day of the week based on processed data
-		prompt(answer);			// Prompt user to run again 
+		prompt(answer);				// Prompt user to run again 
 	}
 	return 0;
 }
