@@ -16,6 +16,10 @@ public:
 	// Precondition: The user entered the correct
 	// Dates in the prompt earlier 
 	// Postcondition: The day is calculated and returned
+	bool errorCheck(int a, int b, int c);
+	// Precondition:  User has entered data
+	// Postcondition: If the data is valid the program
+	// Continues, if not, it exits. 
 private:
 	int day;
 	int month;
@@ -34,10 +38,6 @@ private:
 	int getCenturyValue(int year);
 	// Precondition:  User correctly entered the year
 	// Postcondition: Century Value is returned
-	void errorCheck(int a, int b, int c);
-	// Precondition:  User has entered data
-	// Postcondition: If the data is valid the program
-	// Continues, if not, it exits. 
 };
 
 void getInput(int& day, int& month, int& year);
@@ -71,11 +71,14 @@ int main() {
 	cin >> answer;					// User Input
 	
 	while (toupper(answer) == 'Y'){	// Loop while answer = y
-		getInput(day, month, year); // User enters date
+		do {
+			getInput(day, month, year); // User enters date
+		} while (!(date.errorCheck(day, month, year)));
 		
-		//Process Data
-		sum = date.process(day, month, year);	// Process data and return sum based on month, year and day calculations 
+			//Process Data
+			sum = date.process(day, month, year);	// Process data and return sum based on month, year and day calculations 
 		
+
 		//Display Output
 		output(sum);				// Output day of the week based on processed data
 		prompt(answer);				// Prompt user to run again 
@@ -200,7 +203,6 @@ void output(int sum){
 }
 
 int Date::process(int a, int b, int c){
-	errorCheck(a, b, c);
 	int century;
 	day = a;
 	month = getMonthValue(b, c);
@@ -209,12 +211,14 @@ int Date::process(int a, int b, int c){
 	return (month + century + year + day) % 7;	
 }
 
-void Date::errorCheck(int a, int b, int c){
+bool Date::errorCheck(int a, int b, int c){
 	if ((a < 1)||(a > 31)||(b < 1)||(b > 12)||(c < 1582))
 	{
-		cout << "\nInvalid data!\n" << "\nTerminating Program! Please try again.\n";
-		exit(1);
+		cout << "\nInvalid data!\n" << "\nPlease try again\n";
+		return false;
 	}
+	else
+		return true;
 };
 
 void prompt(char &answer){
