@@ -13,8 +13,8 @@ class Date {
 public: 
 	// No Need For Other Mutators Or Accessors
 	int process(int a, int b, int c);
-	// Precondition: The user knows the correct date
-	// That they would like to find the corresponding day to 
+	// Precondition: The user entered the correct
+	// Dates in the prompt earlier 
 	// Postcondition: The day is calculated and returned
 private:
 	int day;
